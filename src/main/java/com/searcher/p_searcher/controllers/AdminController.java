@@ -6,7 +6,6 @@ import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ClassUtils;
@@ -88,7 +87,7 @@ public class AdminController {
                 Paper paper = new Paper();
                 paper.setAuthor(writer);
                 paper.setName(name);
-                paper.setContent(content);
+                paper.setContent(content.trim().replaceAll("\u0000", ""));
                 paper.setPath(filePathLists[i].getPath());
                 //copyFileUsingJava7Files(filePathLists[i], new File(path + "static/pdf/" + fileNameLists[i]));
                 paperMapper.insert(paper);
@@ -155,7 +154,7 @@ public class AdminController {
                 throw e;
             }
 
-            //System.out.println("Get PDF Content ...");
+            System.out.println("Get PDF Content ...");
 
         } catch (Exception e) {
             throw e;
